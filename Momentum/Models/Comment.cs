@@ -15,8 +15,6 @@ namespace Momentum.Models
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        public string Author { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
@@ -26,7 +24,9 @@ namespace Momentum.Models
         [Required]
         public string UserId { get; set; }
 
-        //[Required]
-        //public ApplicationUser User { get; set; }
+        [Required]
+        public ApplicationUser User { get; set; }
+
+        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

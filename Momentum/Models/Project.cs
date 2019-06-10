@@ -17,7 +17,7 @@ namespace Momentum.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreated { get; set; }
 
-
+        [Required]
         [DataType(DataType.Date)] 
         public DateTime DurationGoal { get; set; }
 
@@ -37,16 +37,19 @@ namespace Momentum.Models
 
         public string PublishedApplicationLink { get; set; }
 
+        [Display(Name = "Upload Project Image")]
         public string ImagePath { get; set; }
 
         public bool IsCompleted { get; set; }
+ 
 
         [Required]
         public string UserId { get; set; }
 
-        //[Required]
-        //public ApplicationUser User { get; set; }
+        [Required]
+        public ApplicationUser User { get; set; }
 
-        //public virtual ICollection<ProjectComment> ProjectComments { get; set; }
+        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
+
     }
 }

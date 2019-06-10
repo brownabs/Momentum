@@ -11,8 +11,11 @@ namespace Momentum.Models
         [Key]
         public int QuoteId { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Required]
+        [StringLength(55, ErrorMessage = "Please shorten the product title to 55 characters")]
         public string Author { get; set; }
 
 
