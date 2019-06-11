@@ -22,6 +22,10 @@ namespace Momentum.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required]
+        [Display(Name = "Username")]
+        public override string UserName { get; set; }
+
 
         [Display(Name = "Upload Profile Image")]
         public string ImagePath { get; set; }
