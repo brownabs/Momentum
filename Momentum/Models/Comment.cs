@@ -24,9 +24,8 @@ namespace Momentum.Models
         [Required]
         public string UserId { get; set; }
 
-        [Required]
+   
         public ApplicationUser User { get; set; }
 
-        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
