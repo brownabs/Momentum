@@ -26,7 +26,9 @@ namespace Momentum.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
-
+            modelBuilder.Entity<Project>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
 
 
 
