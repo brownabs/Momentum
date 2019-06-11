@@ -15,10 +15,12 @@ namespace Momentum.Models
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         [Required]
-        [DataType(DataType.Date)] 
+        [DataType(DataType.Date)]
+        [Display(Name = "Completion Date Goal")]
         public DateTime DurationGoal { get; set; }
 
         [DataType(DataType.Date)]
@@ -26,13 +28,16 @@ namespace Momentum.Models
 
         [Required]
         [StringLength(55, ErrorMessage = "Please shorten the product title to 55 characters")]
+        [Display(Name = "Project Name")]
         public string ProjectName { get; set; }
 
         [Required]
         [StringLength(55, ErrorMessage = "Please shorten the product title to 55 characters")]
+        [Display(Name = "Programming Language")]
         public string Language { get; set; }
 
         [Required]
+        [Display(Name = "Github Repository Link")]
         public string SourceCodeLink { get; set; }
 
         public string PublishedApplicationLink { get; set; }
