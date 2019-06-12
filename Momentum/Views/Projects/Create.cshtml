@@ -1,4 +1,4 @@
-﻿@model Momentum.Models.Project
+﻿@model Momentum.Models.ViewModels.UploadProjectPhotoViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -10,36 +10,38 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProjectName" class="control-label"></label>
-                <input asp-for="ProjectName" class="form-control" />
-                <span asp-validation-for="ProjectName" class="text-danger"></span>
+                <label asp-for="Project.ProjectName" class="control-label"></label>
+                <input asp-for="Project.ProjectName" class="form-control" />
+                <span asp-validation-for="Project.ProjectName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Language" class="control-label"></label>
-                <input asp-for="Language" class="form-control" />
-                <span asp-validation-for="Language" class="text-danger"></span>
+                <label asp-for="Project.Language" class="control-label"></label>
+                <input asp-for="Project.Language" class="form-control" />
+                <span asp-validation-for="Project.Language" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DurationGoal" class="control-label"></label>
-                <input asp-for="DurationGoal" class="form-control" />
-                <span asp-validation-for="DurationGoal" class="text-danger"></span>
+                <label asp-for="Project.DurationGoal" class="control-label"></label>
+                <input asp-for="Project.DurationGoal" class="form-control"  value="Select Date" />
+                <span asp-validation-for="Project.DurationGoal" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Project.SourceCodeLink" class="control-label"></label>
+                <input asp-for="Project.SourceCodeLink" class="form-control" />
+                <span asp-validation-for="Project.SourceCodeLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SourceCodeLink" class="control-label"></label>
-                <input asp-for="SourceCodeLink" class="form-control" />
-                <span asp-validation-for="SourceCodeLink" class="text-danger"></span>
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" type="file" /><br><br>
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
-                <input asp-for="ImagePath" class="form-control" />
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
         </form>
     </div>
 </div>
