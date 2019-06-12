@@ -16,6 +16,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Views\Shared\DisplayTemplates\" />
     <Folder Include="wwwroot\images\projectpictures\" />
     <Folder Include="wwwroot\images\profilepictures\" />
   </ItemGroup>

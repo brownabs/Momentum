@@ -55,6 +55,8 @@ namespace Momentum.Models
 
         public ApplicationUser User { get; set; }
 
+        [NotMapped]
+        public string Error { get; set; }
 
     }
 }

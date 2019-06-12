@@ -1,48 +1,62 @@
 ﻿@model IEnumerable<Momentum.Models.Project>
 
-@{
-    ViewData["Title"] = "Index";
-}
 
+@if (ViewBag.projectCount == 0)
+{
     <div class="text-center">
-        <h1 class="display-4">Projects</h1>
-
+        <h1>You currently do not have any projects</h1>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
     </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Language)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-           
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Language)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        }
+        else
+        {
+
+        ViewData["Title"] = "Index";
+
+
+        <div class="text-center">
+            <h1 class="display-4">Projects</h1>
+
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProjectName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Language)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ImagePath)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Language)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        }

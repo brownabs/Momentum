@@ -26,13 +26,26 @@ namespace Momentum.Controllers
             _userManager = userManager;
         }
 
+
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Project.Include(p => p.User);
-            return View(await applicationDbContext.ToListAsync());
+
+            var applicationDbContext = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false);
+
+            var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false).Count();
+            ViewData["projectCount"] = projectCount;
+                return View(await applicationDbContext.ToListAsync());
+            
+            
         }
 
+        // GET: Projects
+        public async Task<IActionResult> GetAccomplishedProjects()
+        {
+            var applicationDbContext = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true);
+            return View(await applicationDbContext.ToListAsync());
+        }
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
