@@ -31,9 +31,11 @@ namespace Momentum.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var applicationDbContext = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false);
 
-            var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false).Count();
+            var user = await GetCurrentUserAsync();
+            var applicationDbContext = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user);
+
+            var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user).Count();
             ViewData["projectCount"] = projectCount;
                 return View(await applicationDbContext.ToListAsync());
             
@@ -43,7 +45,11 @@ namespace Momentum.Controllers
         // GET: Projects
         public async Task<IActionResult> GetAccomplishedProjects()
         {
-            var applicationDbContext = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true);
+            var user = await GetCurrentUserAsync();
+            var applicationDbContext = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user);
+
+            var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user).Count();
+            ViewData["projectCount"] = projectCount;
             return View(await applicationDbContext.ToListAsync());
         }
         // GET: Projects/Details/5
