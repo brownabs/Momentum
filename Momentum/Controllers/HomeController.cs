@@ -5,8 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Momentum.Data;
 using Momentum.Models;
+using Momentum.Models.ViewModels;
 
 namespace Momentum.Controllers
 {
@@ -21,9 +23,24 @@ namespace Momentum.Controllers
             _context = context;
             _userManager = userManager;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+
+            var user = await GetCurrentUserAsync();
+            var projects = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user);
+
+            var quotes = _context.Quote;
+
+            HomePageViewModel model = new HomePageViewModel();
+
+            model.Projects = projects;
+            model.User = user;
+            model.Quotes = quotes;
+
+    
+            return View(model);
+
         }
 
         public IActionResult Privacy()

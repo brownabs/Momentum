@@ -17,9 +17,10 @@ namespace Momentum.Models.ViewModels
         //don't know yet if I need an IEnumerable or List of Quotes
         public IEnumerable<Project> Projects { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser User { get; set; }
 
         public IEnumerable<ApplicationUser> ApplicationUsers { get; set; }
+
     }
 
 }
