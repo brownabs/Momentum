@@ -30,7 +30,13 @@ namespace Momentum.Controllers
             var user = await GetCurrentUserAsync();
             var projects = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user);
 
-            var quotes = _context.Quote.OrderBy(a => Guid.NewGuid()).ToList().Take(1); 
+            var quotes = _context.Quote.ToList();
+
+
+
+
+            Random rand = new Random();
+            var models = quotes.OrderBy(c => rand.Next()).ToList().Take(1);
 
 
 
@@ -38,7 +44,7 @@ namespace Momentum.Controllers
 
             model.Projects = projects;
             model.User = user;
-            model.Quotes = quotes;
+            model.Quotes = models;
 
     
             return View(model);

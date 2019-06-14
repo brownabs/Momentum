@@ -10,6 +10,7 @@
 
 </div>
 <div class="quotes">
+    <h3>Motivational Quotes</h3>
 
     @foreach (var item in Model.Quotes)
     {
@@ -29,3 +30,27 @@
         </div)>
     </form>
 </div>
+
+<div class="homepageprojects">
+    <h3>Current Projects </h3>
+
+    @foreach (var item in Model.Projects)
+    {
+        <p>
+        <p>
+            @Html.DisplayFor(modelItem => item.ProjectName)
+        </p>
+        <p>
+            - @Html.DisplayFor(modelItem => item.Language)
+        </p>
+        </p>
+
+    }
+    <form asp-action="Details" asp-controller="Projects">
+        <div) class="form-group">
+            <input type="submit" value="View Project" />
+        </div)>
+    </form>
+</div>
+
+
