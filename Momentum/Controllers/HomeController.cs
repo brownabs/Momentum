@@ -30,7 +30,9 @@ namespace Momentum.Controllers
             var user = await GetCurrentUserAsync();
             var projects = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user);
 
-            var quotes = _context.Quote;
+            var quotes = _context.Quote.OrderBy(a => Guid.NewGuid()).ToList().Take(1); 
+
+
 
             HomePageViewModel model = new HomePageViewModel();
 

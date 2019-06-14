@@ -2,10 +2,30 @@
 
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Index";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Momentum</h1>
 
+</div>
+<div class="quotes">
+
+    @foreach (var item in Model.Quotes)
+    {
+        <p>
+        <p>
+            @Html.DisplayFor(modelItem => item.Description)
+        </p>
+        <p>
+           - @Html.DisplayFor(modelItem => item.Author)
+        </p>
+        </p>
+
+    }
+    <form asp-action="Index" asp-controller="Home">
+        <div) class="form-group">
+            <input type="submit" value="Next" />
+        </div)>
+    </form>
 </div>
