@@ -30,7 +30,9 @@ namespace Momentum.Data
                 .Property(b => b.DateCreated)
                 .HasDefaultValueSql("GETDATE()");
 
-
+            modelBuilder.Entity<Comment>()
+              .Property(b => b.DateCreated)
+              .HasDefaultValueSql("GETDATE()");
 
         }
     }

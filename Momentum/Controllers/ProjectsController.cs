@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,6 +29,7 @@ namespace Momentum.Controllers
 
 
         // GET: Projects
+        [Authorize]
         public async Task<IActionResult> Index()
         {
 
@@ -43,12 +45,13 @@ namespace Momentum.Controllers
         }
 
         // GET: Projects
+        [Authorize]
         public async Task<IActionResult> GetAccomplishedProjects()
         {
             var user = await GetCurrentUserAsync();
             var applicationDbContext = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user);
 
-            var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user).Count();
+            var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user).Count();
             ViewData["projectCount"] = projectCount;
             return View(await applicationDbContext.ToListAsync());
         }
@@ -72,6 +75,7 @@ namespace Momentum.Controllers
         }
 
         // GET: Projects/Create
+        [Authorize]
         public IActionResult Create()
         {
 
