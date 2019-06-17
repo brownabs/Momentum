@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.AspNetCore.Identity;
 
@@ -34,7 +35,12 @@ namespace Momentum.Models
 
         public virtual ICollection<Project> Projects { get; set; }
 
-        public virtual ICollection<Friendship> Friendships { get; set; }
+        [InverseProperty("Friended")]
+        public virtual ICollection<Friendship> Friendeds { get; set; }
+
+        [InverseProperty("User")]
+        public virtual ICollection<Friendship> Frienders { get; set; }
+
 
         public virtual ICollection<ProjectComment> ProjectComments { get; set; }
 

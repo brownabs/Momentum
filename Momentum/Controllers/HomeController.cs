@@ -54,6 +54,27 @@ namespace Momentum.Controllers
 
         }
 
+        public async Task<IActionResult> GetUserProfile()
+        {
+
+            var user = await GetCurrentUserAsync();
+            var projects = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user);
+
+            var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user).Count();
+            ViewData["projectCount"] = projectCount;
+
+
+            UserProfileViewModel model = new UserProfileViewModel();
+
+            model.Projects = projects;
+            model.User = user;
+   
+
+
+            return View(model);
+
+        }
+
         public IActionResult Privacy()
         {
             return View();
