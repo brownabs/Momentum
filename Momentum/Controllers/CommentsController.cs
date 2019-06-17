@@ -26,6 +26,8 @@ namespace Momentum.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var applicationDbContext = _context.Comment.Include(c => c.Project).Include(c => c.User).Where(c => c.ProjectId == id);
+            var commentCount = _context.Comment.Include(c => c.Project).Include(c => c.User).Where(c => c.ProjectId == id).Count();
+            ViewData["commentCount"] = commentCount;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -78,11 +80,11 @@ namespace Momentum.Controllers
             {
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Projects");
             }
             ViewData["ProjectId"] = new SelectList(_context.Project, "ProjectId", "Language", comment.ProjectId);
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", comment.UserId);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Comments");
         }
 
         // GET: Comments/Edit/5
@@ -168,7 +170,7 @@ namespace Momentum.Controllers
             var comment = await _context.Comment.FindAsync(id);
             _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Projects");
         }
 
         private bool CommentExists(int id)

@@ -2,28 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Momentum.Data;
 using Momentum.Models;
+using Momentum.Models.ViewModels;
 
 namespace Momentum.Controllers
 {
     public class FriendshipsController : Controller
     {
-        private readonly ApplicationDbContext _context;
 
-        public FriendshipsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+        public FriendshipsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Friendships
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ApplicationUsers;
-            return View(applicationDbContext);
+
+           var users = await _context.ApplicationUsers.ToListAsync();
+
+            UserAndFriendsViewModel model = new UserAndFriendsViewModel();
+
+            model.ApplicationUsers = users;
+    
+            return View(model);
         }
 
         // GET: Friendships/Details/5
@@ -57,8 +69,15 @@ namespace Momentum.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FriendshipId,UserId")] Friendship friendship)
+        public async Task<IActionResult> Create([Bind("FriendshipId,UserId")] int id, Friendship friendship)
         {
+            ModelState.Remove("UserId");
+            var user = await GetCurrentUserAsync();
+
+            friendship.FriendshipId = id;
+            friendship.UserId = user.Id;
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(friendship);
