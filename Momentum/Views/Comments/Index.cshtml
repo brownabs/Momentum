@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Momentum.Models.Comment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+   <h1>Comments</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.CommentId">Delete</a>
+                </td>
+            </tr>
+        }
+    <p>
+        <a asp-action="Index" asp-controller="Projects">Back To Projects</a> 
+    </p>
+    </tbody>
+</table>

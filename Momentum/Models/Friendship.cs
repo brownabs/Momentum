@@ -18,5 +18,6 @@ namespace Momentum.Models
        
         public ApplicationUser User { get; set; }
 
+
     }
 }

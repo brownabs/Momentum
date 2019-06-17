@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Momentum.Models.Friendship>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Momentum Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)  @Html.DisplayFor(modelItem => item.User.LastName)
+            </td>
+            <td>
+                <a asp-action="Create" asp-route-id="@item.User.Id">Add Friend</a> |
+                <a asp-action="Details" asp-route-id="@item.User.Id">View Profile</a> |
+                <a asp-action="Delete" asp-route-id="@item.User.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

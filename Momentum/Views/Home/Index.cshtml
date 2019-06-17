@@ -7,10 +7,11 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Momentum</h1>
-
+    <p>Stay motivated and keep coding by managing your side projects</p>
 </div>
 <div class="quotes">
     <h3>Motivational Quotes</h3>
+
 
     @foreach (var item in Model.Quotes)
     {
@@ -34,23 +35,30 @@
 <div class="homepageprojects">
     <h3>Current Projects </h3>
 
-    @foreach (var item in Model.Projects)
+    @if (ViewBag.projectCount > 1)
     {
-        <p>
-        <p>
-            @Html.DisplayFor(modelItem => item.ProjectName)
-        </p>
-        <p>
-            - @Html.DisplayFor(modelItem => item.Language)
-        </p>
-        </p>
 
+        @foreach (var item in Model.Projects)
+        {
+            <p>
+            <p>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </p>
+            <p>
+                - @Html.DisplayFor(modelItem => item.Language)
+            </p>
+            </p>
+            <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId">View Project</a>
+        }
     }
-    <form asp-action="Details" asp-controller="Projects">
-        <div) class="form-group">
-            <input type="submit" value="View Project" />
-        </div)>
-    </form>
+    else
+    {
+        <h3>You don't have any current projects. Would you like to create one?</h3>
+        <p>
+            <a asp-action="Create" asp-controller="Projects">Create New</a>
+        </p>
+    }
 </div>
+
 
 
