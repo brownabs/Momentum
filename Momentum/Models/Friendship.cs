@@ -13,9 +13,13 @@ namespace Momentum.Models
         public int FriendshipId { get; set; }
 
         [Required]
-        public string UserId { get; set; }
+        public string FriendId { get; set; }
 
-       
+        public ApplicationUser Friended { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+      
         public ApplicationUser User { get; set; }
 
 

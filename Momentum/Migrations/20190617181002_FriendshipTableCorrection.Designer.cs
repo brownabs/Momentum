@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Momentum.Data;
 
 namespace Momentum.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190617181002_FriendshipTableCorrection")]
+    partial class FriendshipTableCorrection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,14 +231,12 @@ namespace Momentum.Migrations
                     b.Property<string>("FriendId")
                         .IsRequired();
 
-                    b.Property<string>("FriendedId");
-
                     b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("FriendshipId");
 
-                    b.HasIndex("FriendedId");
+                    b.HasIndex("FriendId");
 
                     b.HasIndex("UserId");
 
@@ -386,12 +386,13 @@ namespace Momentum.Migrations
 
             modelBuilder.Entity("Momentum.Models.Friendship", b =>
                 {
-                    b.HasOne("Momentum.Models.ApplicationUser", "Friended")
-                        .WithMany("Friendeds")
-                        .HasForeignKey("FriendedId");
+                    b.HasOne("Momentum.Models.ApplicationUser", "Friend")
+                        .WithMany()
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Momentum.Models.ApplicationUser", "User")
-                        .WithMany("Frienders")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

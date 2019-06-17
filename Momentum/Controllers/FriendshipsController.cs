@@ -29,11 +29,19 @@ namespace Momentum.Controllers
         public async Task<IActionResult> Index()
         {
 
-           var users = await _context.ApplicationUsers.ToListAsync();
+            var currentUser = await GetCurrentUserAsync();
+                  
+
+            var users =  _context.ApplicationUsers.Where(u => u.Id != currentUser.Id);
+
+
+            var friendships = await _context.Friendship.Include(f => f.Friended).Include(f => f.User).ToListAsync();
 
             UserAndFriendsViewModel model = new UserAndFriendsViewModel();
 
             model.ApplicationUsers = users;
+
+            model.Friendships = friendships;
     
             return View(model);
         }
@@ -58,10 +66,24 @@ namespace Momentum.Controllers
         }
 
         // GET: Friendships/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(string id)
         {
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
-            return View();
+            var personToFriend = await _context.ApplicationUsers.FirstOrDefaultAsync(p => p.Id == id);
+
+            var user = await GetCurrentUserAsync();
+          
+
+            var friendship = new Friendship()
+            {
+                FriendId = id,
+                UserId = user.Id,
+                Friended = personToFriend
+               
+            };
+
+
+           
+            return View(friendship);
         }
 
         // POST: Friendships/Create
@@ -69,14 +91,8 @@ namespace Momentum.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FriendshipId,UserId")] int id, Friendship friendship)
-        {
-            ModelState.Remove("UserId");
-            var user = await GetCurrentUserAsync();
-
-            friendship.FriendshipId = id;
-            friendship.UserId = user.Id;
-
+        public async Task<IActionResult> Create([Bind("UserId, FriendId")] Friendship friendship)
+        {    
 
             if (ModelState.IsValid)
             {
