@@ -1,8 +1,10 @@
-﻿@model Momentum.Models.ViewModels.UserAndFriendsViewModel
+﻿@model IEnumerable<Momentum.Models.ApplicationUser>
 
 @{
     ViewData["Title"] = "Index";
 }
+
+
 
 <h1>Meet the Momentum Gang</h1>
 
@@ -13,19 +15,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ApplicationUsers)
+
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
-                    <a asp-action="Create" asp-route-id="@item.Id">Add Friend</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">View Profile</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete Friend</a>
+                    <a asp-action="Create" asp-route-id="@item.Id">Follow User</a> |
+                    <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a> |
                 </td>
+
             </tr>
         }
-        </tbody>
+    </tbody>
 </table>
-        

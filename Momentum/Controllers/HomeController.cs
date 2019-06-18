@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace Momentum.Controllers
             _userManager = userManager;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
 
@@ -49,11 +51,12 @@ namespace Momentum.Controllers
             model.User = user;
             model.Quotes = models;
 
-    
+
             return View(model);
 
-        }
+    }
 
+        [Authorize]
         public async Task<IActionResult> GetUserProfile()
         {
 
@@ -63,12 +66,16 @@ namespace Momentum.Controllers
             var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user).Count();
             ViewData["projectCount"] = projectCount;
 
+            var friendships = _context.Friendship.Include(f => f.User).Include(f => f.Friended).Where(f => f.UserId == user.Id);
+            var friendCount = _context.Friendship.Include(f => f.User).Include(f => f.Friended).Where(f => f.UserId == user.Id).Count();
+            ViewData["friendCount"] = friendCount;
 
             UserProfileViewModel model = new UserProfileViewModel();
 
+            model.Friendships = friendships;
             model.Projects = projects;
             model.User = user;
-   
+
 
 
             return View(model);

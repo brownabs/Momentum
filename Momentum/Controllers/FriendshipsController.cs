@@ -28,24 +28,74 @@ namespace Momentum.Controllers
         // GET: Friendships
         public async Task<IActionResult> Index()
         {
+            //created a list of users
 
+            List<ApplicationUser> usersNotFriendsWith = new List<ApplicationUser>();
+
+            //get current user
             var currentUser = await GetCurrentUserAsync();
-                  
 
-            var users =  _context.ApplicationUsers.Where(u => u.Id != currentUser.Id);
+            //get users that aren't current user
+            var otherPersons = await _context.ApplicationUsers.Where(u => u.Id != currentUser.Id).ToListAsync();
 
+            //get all friendships
+            var allFriendRelationships = await _context.Friendship.ToListAsync();
 
-            var friendships = await _context.Friendship.Include(f => f.Friended).Include(f => f.User).ToListAsync();
+            //flag set friend to false
+            bool friend = false;
 
-            UserAndFriendsViewModel model = new UserAndFriendsViewModel();
+            //iterate over all other users
+            foreach (var otherPerson in otherPersons)
+            {
+                    friend = false;
 
-            model.ApplicationUsers = users;
+                //iterate over all friendships
+                foreach (var friendship in allFriendRelationships)
+                {
 
-            model.Friendships = friendships;
-    
-            return View(model);
+                    // if other user's id is equal to a userId in the Friendship table 
+                    //and current user is equal to a FriendId on the Friendship table
+                    //set friend to true
+                    if (otherPerson.Id == friendship.UserId && currentUser.Id == friendship.FriendId)
+                    {
+                        friend = true;
+                    }
+
+                    //also if current user id is equal to UserId on table 
+                    //and other user's id is equal to FriendId on Friendship table
+                    //set friend to true
+                    if (currentUser.Id == friendship.UserId && otherPerson.Id == friendship.FriendId)
+                    {
+                        friend = true;
+                        
+                    }
+
+                   
+                }
+                    //if there isn't a relationship on the FriendShip Table, set friend to false and add to list
+                    if (friend == false)
+                    {
+                        usersNotFriendsWith.Add(otherPerson);
+                        
+                    }
+
+            }
+                if (usersNotFriendsWith == null)
+                {
+                    return NotFound();
+                }
+
+                var checkUsersNotFriendsWith = usersNotFriendsWith.Count();
+                if (checkUsersNotFriendsWith < 1)
+                {
+                    return NotFound();
+                }          
+
+                return View(usersNotFriendsWith);
+
         }
-
+    
+        
         // GET: Friendships/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -77,7 +127,8 @@ namespace Momentum.Controllers
             {
                 FriendId = id,
                 UserId = user.Id,
-                Friended = personToFriend
+                Friended = personToFriend,
+                User = user
                
             };
 
