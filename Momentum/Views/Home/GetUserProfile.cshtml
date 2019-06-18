@@ -1,0 +1,68 @@
+﻿@model Momentum.Models.ViewModels.UserProfileViewModel
+
+
+@{
+    ViewData["Title"] = "GetUserProfile";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Profile</h1>
+    @Html.DisplayFor(modelItem => modelItem.User.FirstName)
+</div>
+
+<div class="profileprojects">
+    <h3>Current Projects </h3>
+
+    @if (ViewBag.projectCount > 1)
+    {
+
+        @foreach (var item in Model.Projects)
+        {
+            <p>
+            <p>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </p>
+            <p>
+                - @Html.DisplayFor(modelItem => item.Language)
+            </p>
+            </p>
+            <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId">View Project</a>
+        }
+    }
+    else
+    {
+        <h3>You don't have any current projects. Would you like to create one?</h3>
+        <p>
+            <a asp-action="Create" asp-controller="Projects">Create New</a>
+        </p>
+    }
+</div>
+
+
+<div class="profilefriends">
+    <h3>Friends</h3>
+
+    @if (ViewBag.friendCount > 1)
+    {
+
+        @foreach (var item in Model.Friendships)
+        {
+          
+            <p>
+                @Html.DisplayFor(modelItem => item.Friended.FirstName)  @Html.DisplayFor(modelItem => item.Friended.LastName)
+            </p>
+
+            //<a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId">View Project</a>
+        }
+    }
+    else
+    {
+        <h3>You are not following any other Momentum users</h3>
+        <p>
+            <a asp-action="Index" asp-controller="Friendships">View Users</a>
+        </p>
+    }
+</div>
+
+
+
