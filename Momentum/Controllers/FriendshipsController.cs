@@ -31,6 +31,8 @@ namespace Momentum.Controllers
             //created a list of users
 
             List<ApplicationUser> usersNotFriendsWith = new List<ApplicationUser>();
+            List<ApplicationUser> usersFollowingCurrentUser = new List<ApplicationUser>();
+            List<ApplicationUser> usersCurrentUserIsFollowing = new List<ApplicationUser>();
 
             //get current user
             var currentUser = await GetCurrentUserAsync();
@@ -43,11 +45,14 @@ namespace Momentum.Controllers
 
             //flag set friend to false
             bool friend = false;
+            bool friendFollowingCurrentUser = false;
+            bool currentUserFollowingFriend = false;
+
 
             //iterate over all other users
             foreach (var otherPerson in otherPersons)
             {
-                    friend = false;
+                friend = false;
 
                 //iterate over all friendships
                 foreach (var friendship in allFriendRelationships)
@@ -59,6 +64,8 @@ namespace Momentum.Controllers
                     if (otherPerson.Id == friendship.UserId && currentUser.Id == friendship.FriendId)
                     {
                         friend = true;
+                        friendFollowingCurrentUser = true;
+
                     }
 
                     //also if current user id is equal to UserId on table 
@@ -67,29 +74,55 @@ namespace Momentum.Controllers
                     if (currentUser.Id == friendship.UserId && otherPerson.Id == friendship.FriendId)
                     {
                         friend = true;
-                        
+                        currentUserFollowingFriend = true;
+
+
                     }
 
-                   
                 }
-                    //if there isn't a relationship on the FriendShip Table, set friend to false and add to list
-                    if (friend == false)
-                    {
-                        usersNotFriendsWith.Add(otherPerson);
-                        
-                    }
+                //if there isn't a relationship on the FriendShip Table, set friend to false and add to list
+                if (friend == false)
+                {
+                    usersNotFriendsWith.Add(otherPerson);
+
+                }
+
+                if (friend == true && friendFollowingCurrentUser == true)
+                {
+                    usersFollowingCurrentUser.Add(otherPerson);
+
+                }
+
+                if (friend == true && currentUserFollowingFriend == true)
+                {
+                    usersCurrentUserIsFollowing.Add(otherPerson);
+                }
 
             }
-                if (usersNotFriendsWith == null)
-                {
-                    return NotFound();
-                }
 
-                var UsersNotFriendsWithCount = usersNotFriendsWith.Count();
-             
+
+            if (usersNotFriendsWith == null)
+            {
+                return NotFound();
+            }
+
+            var UsersNotFriendsWithCount = usersNotFriendsWith.Count();
+            var usersFollowingCurrentUserCount = usersFollowingCurrentUser.Count();
+            var usersCurrentUserIsFollowingCount = usersCurrentUserIsFollowing.Count();
+
+            UserAndFriendsViewModel model = new UserAndFriendsViewModel()
+            {
+
+                notFriends = usersNotFriendsWith,
+                peopleCurrentUserIsFollowing = usersCurrentUserIsFollowing,
+                peopleFollowingCurrentUser = usersFollowingCurrentUser
+
+            };
+
+           
 
             ViewData["UsersNotFriendsWithCount"] = UsersNotFriendsWithCount;
-            return View(usersNotFriendsWith);
+            return View(model);
 
         }
 
@@ -208,17 +241,16 @@ namespace Momentum.Controllers
             return View(friendship);
         }
 
-        // GET: Friendships/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var friendship = await _context.Friendship
-                .Include(f => f.User)
-                .FirstOrDefaultAsync(m => m.FriendshipId == id);
+            var currentUser = await GetCurrentUserAsync();
+            var friendship = _context.Friendship.Where(f => f.FriendId == id && currentUser.Id == f.UserId).FirstOrDefault();
+
             if (friendship == null)
             {
                 return NotFound();
@@ -228,11 +260,13 @@ namespace Momentum.Controllers
         }
 
         // POST: Friendships/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Unfollow(int FriendshipId)
         {
-            var friendship = await _context.Friendship.FindAsync(id);
+
+          
+            var friendship = await _context.Friendship.FindAsync(FriendshipId);
             _context.Friendship.Remove(friendship);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

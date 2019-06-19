@@ -16,7 +16,11 @@ namespace Momentum.Models.ViewModels
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
-        public IEnumerable<ApplicationUser> ApplicationUsers { get; set; }
+        public IEnumerable<ApplicationUser> notFriends { get; set; }
+
+        public IEnumerable<ApplicationUser> peopleCurrentUserIsFollowing { get; set; }
+
+        public IEnumerable<ApplicationUser> peopleFollowingCurrentUser { get; set; }
 
         public Friendship Friendship { get; set; }
 

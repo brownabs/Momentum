@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Momentum.Models.ApplicationUser>
+﻿@model Momentum.Models.ViewModels.UserAndFriendsViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -15,30 +15,73 @@
 else
 {
 
+    <div class="text-center pb-sm-2">
+        <h1>Meet the Momentum Gang</h1>
+        </div>
+        <table class="table">
+            <thead>
+             
+            </thead>
+            <tbody>
+                <div>
+                @foreach (var item in Model.notFriends)
+                {
+                    if (item != null)
+                    {
 
-    <h1>Meet the Momentum Gang</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+                        <tr>
+                            <td>
+                                  @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                <a asp-action="Create" asp-route-id="@item.Id">Follow User</a> |
+                                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a> |
+                            </td>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        <a asp-action="Create" asp-route-id="@item.Id">Follow User</a> |
-                        <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a> |
-                    </td>
+                        </tr>
+                    }
+                }
+                </div>
+            
 
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+                @foreach (var item in Model.peopleCurrentUserIsFollowing)
+                {
+                    if (item != null)
+                    {
+
+
+                        <tr>
+                            <td>
+                                You are following    @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                <a asp-action="Delete" asp-controller="Friendships" asp-route-id="@item.Id">Unfollow User</a> |
+                                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a> |
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+                @foreach (var item in Model.peopleFollowingCurrentUser)
+                {
+
+                    if (item != null)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName) is following you
+                            </td>
+                            <td>
+                                <a asp-action="Create" asp-route-id="@item.Id">Follow User</a> |
+                                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a> |
+                            </td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        }

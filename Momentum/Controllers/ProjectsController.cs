@@ -157,12 +157,15 @@ namespace Momentum.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+ 
         public async Task<IActionResult> Edit(int id, [Bind("ProjectId,DateCreated,DurationGoal,DateCompleted,ProjectName,Language,SourceCodeLink,PublishedApplicationLink,ImagePath,IsCompleted,UserId")] Project project)
         {
             if (id != project.ProjectId)
             {
                 return NotFound();
             }
+
+           
 
             
             if(project.IsCompleted == true)
