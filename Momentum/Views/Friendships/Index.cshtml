@@ -4,30 +4,41 @@
     ViewData["Title"] = "Index";
 }
 
+@if (ViewBag.UsersNotFriendsWithCount == 0)
+{
+    <div class="text-center">
+        <h1>There are no Momentum users for you to follow</h1>
+
+    </div>
+
+}
+else
+{
 
 
-<h1>Meet the Momentum Gang</h1>
+    <h1>Meet the Momentum Gang</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    <a asp-action="Create" asp-route-id="@item.Id">Follow User</a> |
-                    <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a> |
-                </td>
-
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        <a asp-action="Create" asp-route-id="@item.Id">Follow User</a> |
+                        <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a> |
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

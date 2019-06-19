@@ -25,7 +25,7 @@ namespace Momentum.Controllers
             _userManager = userManager;
         }
 
-        // GET: Friendships
+        // GET: Users That Are Not Friends With Current User
         public async Task<IActionResult> Index()
         {
             //created a list of users
@@ -85,17 +85,17 @@ namespace Momentum.Controllers
                     return NotFound();
                 }
 
-                var checkUsersNotFriendsWith = usersNotFriendsWith.Count();
-                if (checkUsersNotFriendsWith < 1)
-                {
-                    return NotFound();
-                }          
+                var UsersNotFriendsWithCount = usersNotFriendsWith.Count();
+             
 
-                return View(usersNotFriendsWith);
+            ViewData["UsersNotFriendsWithCount"] = UsersNotFriendsWithCount;
+            return View(usersNotFriendsWith);
 
         }
-    
-        
+
+
+       
+
         // GET: Friendships/Details/5
         public async Task<IActionResult> Details(int? id)
         {
