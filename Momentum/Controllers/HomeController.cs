@@ -54,28 +54,79 @@ namespace Momentum.Controllers
 
             return View(model);
 
-    }
+        }
 
         [Authorize]
-        public async Task<IActionResult> GetUserProfile()
+        public async Task<IActionResult> GetUserProfile(string id)
         {
-
             var user = await GetCurrentUserAsync();
+
+            if(id != null)
+            {
+                user = await _context.ApplicationUsers.FindAsync(id);
+            }
+
             var projects = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == false && p.User == user);
 
             var projectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user).Count();
             ViewData["projectCount"] = projectCount;
 
-            var friendships = _context.Friendship.Include(f => f.User).Include(f => f.Friended).Where(f => f.UserId == user.Id);
-            var friendCount = _context.Friendship.Include(f => f.User).Include(f => f.Friended).Where(f => f.UserId == user.Id).Count();
-            ViewData["friendCount"] = friendCount;
+
+            //created a list of users
+
+            List<ApplicationUser> usersCurrentUserHasAdded = new List<ApplicationUser>();
+
+
+           
+
+            //get users that aren't current user
+            var otherUsers = await _context.ApplicationUsers.Where(u => u.Id != user.Id).ToListAsync();
+
+            //get all friendships
+            var allFriendRelationships = await _context.Friendship.ToListAsync();
+
+            //flag set friend to false
+            bool friend = false;
+
+            //iterate over all other users
+            foreach (var otherPerson in otherUsers)
+            {
+                friend = false;
+
+                //iterate over all friendships
+                foreach (var friendship in allFriendRelationships)
+                {
+
+                    //also if current user id is equal to UserId on table 
+                    //and other user's id is equal to FriendId on Friendship table
+                    //set friend to true
+                    if (user.Id == friendship.UserId && otherPerson.Id == friendship.FriendId)
+                    {
+                        friend = true;
+                    }
+
+                }
+                if (friend == true)
+                {
+                    usersCurrentUserHasAdded.Add(otherPerson);
+                }
+
+            }
+            if (usersCurrentUserHasAdded == null)
+            {
+                return NotFound();
+            }
+
+            var UserFriendsWithCount = usersCurrentUserHasAdded.Count();
+
+            ViewData["UsersFriendsCount"] = UserFriendsWithCount;
+
 
             UserProfileViewModel model = new UserProfileViewModel();
 
-            model.Friendships = friendships;
+            model.ApplicationUsers = usersCurrentUserHasAdded;
             model.Projects = projects;
             model.User = user;
-
 
 
             return View(model);

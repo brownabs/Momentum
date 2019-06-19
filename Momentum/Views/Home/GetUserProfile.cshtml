@@ -7,7 +7,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Profile</h1>
-    @Html.DisplayFor(modelItem => modelItem.User.FirstName)
+    @Html.DisplayFor(modelItem => Model.User.FirstName)
 </div>
 
 <div class="profileprojects">
@@ -42,17 +42,18 @@
 <div class="profilefriends">
     <h3>Friends</h3>
 
-    @if (ViewBag.friendCount > 1)
+    @if (ViewBag.UsersFriendsCount > 1)
     {
 
-        @foreach (var item in Model.Friendships)
+        @foreach (var item in Model.ApplicationUsers)
         {
-          
-            <p>
-                @Html.DisplayFor(modelItem => item.Friended.FirstName)  @Html.DisplayFor(modelItem => item.Friended.LastName)
-            </p>
 
-            //<a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId">View Project</a>
+            <div>
+                @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+            </div>
+
+            <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a> 
+            <br />
         }
     }
     else
