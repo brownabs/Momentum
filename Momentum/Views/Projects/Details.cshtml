@@ -24,14 +24,23 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DurationGoal)
         </dd>
-        @if (Model.PublishedApplicationLink != null)
+        @if (Model.DateCompleted != null)
         {
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.DateCompleted)
             </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateCompleted)
-        </dd>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateCompleted)
+            </dd>
+        }
+        @if (Model.PublishedApplicationLink != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PublishedApplicationLink)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PublishedApplicationLink)
+            </dd>
         }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ProjectName)
@@ -63,17 +72,12 @@
 
         @if (Model.ImagePath != null)
         {
-          
+
             <dd class="col-sm-10">
                 <img src="/images/projectpictures/@Model.ImagePath" class="" />
             </dd>
         }
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsCompleted)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsCompleted)
-        </dd>
+
     </dl>
 </div>
 <div>
