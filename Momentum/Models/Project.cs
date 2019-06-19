@@ -21,10 +21,10 @@ namespace Momentum.Models
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Completion Date Goal")]
-       // [DateRange("2011/08/01", "2051/01/01")]
         public DateTime DurationGoal { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Name = "Completion Date")]
         public DateTime? DateCompleted { get; set; }
 
         [Required]

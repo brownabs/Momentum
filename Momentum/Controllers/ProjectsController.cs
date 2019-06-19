@@ -164,6 +164,17 @@ namespace Momentum.Controllers
                 return NotFound();
             }
 
+            
+            if(project.IsCompleted == true)
+            {
+                ModelState.Remove("Project.DateCompleted");
+                project.DateCompleted = DateTime.Now;
+            } else
+            {
+                ModelState.Remove("Project.IsCompleted");
+                project.IsCompleted = false;
+            }
+
             if (ModelState.IsValid)
             {
                 try
