@@ -4,14 +4,18 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+    
+        <div class="card  text-center p-4 pt-5" style="width: 25rem;" >
 
-<h3>Are you sure you want to unfollow this user?</h3>
-@Html.DisplayFor(model => model.FriendshipId)
-<div>
+            <img class="card-img-top" src="https://www.emojirequest.com/images/ConcernedEmoji.jpg" alt="Card image cap">
+            <h3 class="p-xl-4">Are you sure you want to unfollow this user?</h3>
 
-    <form method="post">
-        <button formaction="/Friendships/Unfollow?FriendshipId=@Model.FriendshipId">Submit</button>
+            <div>
 
-    </form>
-</div>
+                <form method="post">
+                    <button class="btn btn-secondary" formaction="/Friendships/Unfollow?FriendshipId=@Model.FriendshipId">Submit</button>
+
+                </form>
+            </div>
+        </div>
+

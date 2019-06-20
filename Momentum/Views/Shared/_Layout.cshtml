@@ -19,9 +19,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" id="mainNavBar">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Momentum</a>
+                <a class="nav-brand" id="momentumLogo" asp-area="" asp-controller="Home" asp-action="Index">Momentum</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,19 +30,19 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Create">Create Projects</a>
+                            <a class="nav-link text-light " asp-area="" asp-controller="Projects" asp-action="Create">Create Projects</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Index">Current Projects</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="Index">Current Projects</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="GetAccomplishedProjects">Accomplishments</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="GetAccomplishedProjects">Accomplishments</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Friendships" asp-action="Index">Follow Users</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Friendships" asp-action="Index">Follow Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-route-id="" asp-action="GetUserProfile">Profile</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-route-id="" asp-action="GetUserProfile">Profile</a>
                         </li>
                     </ul>
                 </div>

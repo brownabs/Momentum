@@ -42,8 +42,9 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: #dfe3ee 
 }
 .footer {
   position: absolute;
@@ -53,4 +54,68 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.card {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+    margin-top: 10px;
+}
+
+.row {
+   display: flex;
+   justify-content: center;
+
+}
+
+.img {
+    height: 20px;
+    width: 20px
+}
+
+.project-delete {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+    margin-top: 10px;
+}
+
+.quotes {
+    background-color: #303951;
+    border-radius: 10px;
+}
+
+.navbar-brand {
+    font : italic !important
+}
+
+#mainNavBar {
+    background-color: #303951 !important;
+}
+
+#darkColor {
+    background-color: #303951;
+    width:100%;
+    height: 100%;
+}
+
+#navBarText {
+    background-color: #303951 !important;
+
+}
+
+#momentumLogo {
+    font-style: italic;
+    color: white !important;
+    font-size: 18px;
+    margin-right: 5px
+}
+
+.h1 {
+    font-style: italic;
+}
+
+.links {
+    color: #303951 !important;
 }

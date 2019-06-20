@@ -33,36 +33,32 @@
                 <input asp-for="SourceCodeLink" class="form-control" />
                 <span asp-validation-for="SourceCodeLink" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PublishedApplicationLink" class="control-label"></label>
-                <input asp-for="PublishedApplicationLink" class="form-control" />
-                <span asp-validation-for="PublishedApplicationLink" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
-                <input asp-for="ImagePath" class="form-control" />
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
-            </div>
+            @if (Model.PublishedApplicationLink != null)
+            {
+                <div class="form-group">
+                    <label asp-for="PublishedApplicationLink" class="control-label"></label>
+                    <input asp-for="PublishedApplicationLink" class="form-control" />
+                    <span asp-validation-for="PublishedApplicationLink" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsCompleted" /> @Html.DisplayNameFor(model => model.IsCompleted)
                 </label>
             </div>
             <div class="form-group">
-                <input type="hidden" asp-for="UserId" asp-items="ViewBag.UserId"/>
-                @*<label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>*@
+                <input type="hidden" asp-for="UserId" asp-items="ViewBag.UserId" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-secondary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.ProjectId" class="links">Edit</a> |
+    <a asp-action="Index" class="links" >Back to List</a>
 </div>
 
 @section Scripts {

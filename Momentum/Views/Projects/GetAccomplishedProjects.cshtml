@@ -4,7 +4,7 @@
 @if (ViewBag.projectCount == 0)
 {
     <div class="text-center">
-        <h1>You currently do not have any finished projects</h1>
+        <h3 class="display-4 font-italic"> You currently do not have any finished projects</h3>
     </div>
 
 }
@@ -16,7 +16,7 @@ else
 
 
     <div class="text-center">
-        <h1 class="display-4">Accomplished Projects</h1>
+        <h1 class="display-4 font-italic">Accomplished Projects</h1>
 
     </div>
     <table class="table">
@@ -51,8 +51,8 @@ else
                     @Html.DisplayFor(modelItem => item.DateCompleted)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ProjectId" class="links">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProjectId" class="links">Details</a> 
                 </td>
             </tr>
             }
