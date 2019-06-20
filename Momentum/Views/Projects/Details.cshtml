@@ -4,83 +4,81 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
 
 
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DurationGoal)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DurationGoal)
-        </dd>
-        @if (Model.DateCompleted != null)
-        {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DateCompleted)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DateCompleted)
-            </dd>
-        }
-        @if (Model.PublishedApplicationLink != null)
-        {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.PublishedApplicationLink)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.PublishedApplicationLink)
-            </dd>
-        }
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </dt>
-        <dd class="col-sm-10">
+    <div class="text-center pb-sm-2">
+        <h3 class="display-4 font-italic">
             @Html.DisplayFor(model => model.ProjectName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Language)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Language)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SourceCodeLink)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SourceCodeLink)
-        </dd>
-        @if (Model.PublishedApplicationLink != null)
-        {
+        </h3>
+    </div>
+
+        <hr />
+        <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.PublishedApplicationLink)
+
+
+                @Html.DisplayNameFor(model => model.DateCreated)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.PublishedApplicationLink)
+                @Html.DisplayFor(model => model.DateCreated)
             </dd>
-        }
-
-        @if (Model.ImagePath != null)
-        {
-
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DurationGoal)
+            </dt>
             <dd class="col-sm-10">
-                <img src="/images/projectpictures/@Model.ImagePath" class="" />
+                @Html.DisplayFor(model => model.DurationGoal)
             </dd>
-        }
+            @if (Model.DateCompleted != null)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.DateCompleted)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.DateCompleted)
+                </dd>
+            }
+            @if (Model.PublishedApplicationLink != null)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PublishedApplicationLink)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PublishedApplicationLink)
+                </dd>
+            }
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Language)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Language)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.SourceCodeLink)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SourceCodeLink)
+            </dd>
+            @if (Model.PublishedApplicationLink != null)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PublishedApplicationLink)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PublishedApplicationLink)
+                </dd>
+            }
 
-    </dl>
-</div>
+            @if (Model.ImagePath != null)
+            {
+
+                <dd class="col-sm-10">
+                    <img src="/images/projectpictures/@Model.ImagePath" class="" />
+                </dd>
+            }
+
+        </dl>
+   
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ProjectId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.ProjectId" class="links">Edit</a> |
+    <a asp-action="Index" class="links">Back to List</a>
 </div>

@@ -4,57 +4,57 @@
 @if (ViewBag.projectCount == 0)
 {
     <div class="text-center">
-        <h1>You currently do not have any projects</h1>
+         <h3 class="display-4 font-italic">>You currently do not have any projects</h3>
         <p>
             <a asp-action="Create">Create New</a>
         </p>
     </div>
 
-        }
-        else
-        {
+}
+else
+{
 
-        ViewData["Title"] = "Index";
-
-
-        <div class="text-center">
-            <h1 class="display-4">Projects</h1>
-
-        </div>
+    ViewData["Title"] = "Index";
 
 
-        <table class="table">
-            <thead>
+    <div class="text-center">
+        <h1 class="display-4 font-italic">Projects</h1>
+
+    </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Language)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ProjectName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Language)
-                    </th>
-                 <th></th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Language)
+                    </td>
+                    <td>
+                        <a asp-action="Create" asp-controller="Comments" asp-route-id="@item.ProjectId" class="links">Add Comments</a> |
+                        <a asp-action="Index" asp-controller="Comments" asp-route-id="@item.ProjectId" class="links">View Comments</a> |
+                        <a asp-action="Edit" asp-route-id="@item.ProjectId" class="links">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ProjectId" class="links">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ProjectId" class="links">Delete</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProjectName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Language)
-                        </td>
-                        <td>
-                            <a asp-action="Create" asp-controller="Comments" asp-route-id="@item.ProjectId">Add Comments</a> |
-                            <a asp-action="Index" asp-controller="Comments" asp-route-id="@item.ProjectId">View Comments</a> |
-                            <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
-                        </td>
-                    </tr>
-                }
+            }
 
-            </tbody>
-        </table>
-        }
+        </tbody>
+    </table>
+}

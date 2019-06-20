@@ -6,68 +6,55 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to Momentum</h1>
-    <p>Stay motivated and keep coding by managing your side projects</p>
+    <h1 class="display-4 ">Momentum</h1>
+    <p>An app to stay motivated with your side projects and keep coding!</p>
 </div>
 
-<div class="">
-    <div class="quotes pb-2">
-        <h3>Motivational Quotes</h3>
+
+    <div class="quotes p-3">
+        <div class="quotes text-center pt-xl-4">
+            
 
 
-        @foreach (var item in Model.Quotes)
-        {
+            @foreach (var item in Model.Quotes)
+            {
 
-            <div class="card w-25">
-                <div class="card-header">
-                    Quote
+                <div class="card w-75 h-100">
+                    <div class="card-header">
+                       Motivational Quote
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p> @Html.DisplayFor(modelItem => item.Description)</p>
+                            <footer class="blockquote-footer">@Html.DisplayFor(modelItem => item.Author)<cite title="Source Title"></cite></footer>
+                        </blockquote>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p> @Html.DisplayFor(modelItem => item.Description)</p>
-                        <footer class="blockquote-footer">@Html.DisplayFor(modelItem => item.Author)<cite title="Source Title"></cite></footer>
-                    </blockquote>
+                <div class="p-2">
+                    <form asp-action="Index" asp-controller="Home">
+                        <div) class="form-group">
+                            <input type="submit" class="btn btn-secondary" value="Next" />
+                        </div)>
+                    </form>
                 </div>
-            </div>
-            <div class="p-2">
-                <form asp-action="Index" asp-controller="Home">
-                    <div) class="form-group">
-                        <input type="submit" class="btn btn-info" value="Next" />
-                    </div)>
-                </form>
-            </div>
-        }
-</div>
+            }
+        </div>
 
     </div>
 
-    <div class="homepageprojects">
-        <h3>Current Projects </h3>
+    <div class="homepageprojects text-center">
+
 
         @if (ViewBag.projectCount == 0)
         {
             <h3>You don't have any current projects. Would you like to create one?</h3>
             <p>
-                <a asp-action="Create" asp-controller="Projects">Create New</a>
+                <a asp-action="Create" asp-controller="Projects"  class="links">Create New</a>
             </p>
 
         }
-        else
-        {
-            @foreach (var item in Model.Projects)
-            {
-                <p>
-                <p>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </p>
-                <p>
-                    - @Html.DisplayFor(modelItem => item.Language)
-                </p>
-                </p>
-                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId">View Project</a>
-            }
-        }
+
     </div>
 
 
-
+</div>

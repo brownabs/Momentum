@@ -5,10 +5,13 @@
 
 }
 
-<h1>Create</h1>
-
-<h4>Comment</h4>
+ <div class="text-center">
+        <h3 class="display-4 font-italic">Create Project Comment</h3>
+    </div>
 <hr />
+<div class="row pb-5">
+    <a asp-action="Index" class="links">Back to List</a>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -21,15 +24,13 @@
             <div class="form-group">
                 <input type="hidden" name="ProjectId" value="@ViewBag.ProjectId" />
                 <input type="hidden" name="UserId" value="UserId" />
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-secondary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

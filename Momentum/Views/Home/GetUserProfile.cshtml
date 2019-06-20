@@ -11,8 +11,9 @@
 
 
     <div class="text-center">
-        <h1 class="display-4">Profile</h1>
-        @Html.DisplayFor(modelItem => Model.User.FirstName)
+        <h3 class="display-4 font-italic"> @Html.DisplayFor(modelItem => Model.User.FirstName) @Html.DisplayFor(modelItem => Model.User.LastName)'s Profile</h3>
+        <h4 class=" font-italic">@@@Html.DisplayFor(modelItem => Model.User.UserName)</h4>
+
     </div>
 
     <div class="profileprojects">
@@ -24,7 +25,7 @@
             <p>
                 <a asp-action="Create" asp-controller="Projects">Create New</a>
             </p>
-       
+
         }
         else
         {
@@ -38,7 +39,33 @@
                     - @Html.DisplayFor(modelItem => item.Language)
                 </p>
                 </p>
-                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId">View Project</a>
+                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
+            }
+        }
+    </div>
+
+    <div class="profileprojects">
+        <h3>Accomplished Projects </h3>
+
+        @if (ViewBag.accomplishedProjectCount == 0)
+        {
+            <h3>You don't have any accomplished projects, but keep working. You're doing great!</h3>
+
+
+        }
+        else
+        {
+            @foreach (var item in Model.AccomplishedProjects)
+            {
+                <p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </p>
+                <p>
+                    - @Html.DisplayFor(modelItem => item.Language)
+                </p>
+                </p>
+                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
             }
         }
     </div>
@@ -54,18 +81,18 @@
             {
 
                 <div>
-                You are following @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+                    following @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
                 </div>
 
-                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a>
+                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
                 <br />
             }
         }
         else
         {
-            <h3>You are not following any other Momentum users</h3>
+            <h3> not following any other Momentum users</h3>
             <p>
-                <a asp-action="Index" asp-controller="Friendships">View Users</a>
+                <a asp-action="Index" asp-controller="Friendships" class="links">View Users</a>
             </p>
         }
     </div>
@@ -101,7 +128,7 @@ else
                     - @Html.DisplayFor(modelItem => item.Language)
                 </p>
                 </p>
-                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId">View Project</a>
+                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
             }
 
         }
@@ -121,14 +148,14 @@ else
                     @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
                 </div>
 
-                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id">View Profile</a>
+                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
                 <br />
             }
         }
         else
         {
             <h3>This user is not following any other Momentum users</h3>
-           
+
         }
     </div>
 

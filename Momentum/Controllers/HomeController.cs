@@ -122,9 +122,16 @@ namespace Momentum.Controllers
             ViewData["UsersFriendsCount"] = UserFriendsWithCount;
 
 
+            var accomplishedProjects = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user);
+
+            var accomplishedProjectCount = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user).Count();
+            ViewData["accomplishedProjectCount"] = accomplishedProjectCount;
+
+
             UserProfileViewModel model = new UserProfileViewModel();
 
             model.ApplicationUsers = usersCurrentUserHasAdded;
+            model.AccomplishedProjects = accomplishedProjects;
             model.Projects = projects;
             model.User = user;
 
