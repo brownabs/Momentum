@@ -6,159 +6,228 @@
     var loggedInUser = User.Identity.Name;
 }
 
+
 @if (loggedInUser == Model.User.UserName)
 {
-
-
-    <div class="text-center">
-        <h3 class="display-4 font-italic"> @Html.DisplayFor(modelItem => Model.User.FirstName) @Html.DisplayFor(modelItem => Model.User.LastName)'s Profile</h3>
-        <h4 class=" font-italic">@@@Html.DisplayFor(modelItem => Model.User.UserName)</h4>
-
-    </div>
-
-    <div class="profileprojects">
-        <h3>Current Projects </h3>
-
-        @if (ViewBag.projectCount == 0)
-        {
-            <h3>You don't have any current projects. Would you like to create one?</h3>
-            <p>
-                <a asp-action="Create" asp-controller="Projects">Create New</a>
-            </p>
-
-        }
-        else
-        {
-            @foreach (var item in Model.Projects)
+    <div id="profileimagecontainer">
+        <div class="card" id="profileImage">
+            @if (Model.User.ImagePath != null)
             {
-                <p>
-                <p>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </p>
-                <p>
-                    - @Html.DisplayFor(modelItem => item.Language)
-                </p>
-                </p>
-                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
+                <img src="/images/profilepictures/@Model.User.ImagePath" style="width:100%" alt=“avatar” />
             }
-        }
+            <h1> @Html.DisplayFor(modelItem => Model.User.FirstName) @Html.DisplayFor(modelItem => Model.User.LastName)</h1>
+            <p class="title">@@@Html.DisplayFor(modelItem => Model.User.UserName)</p>
+        </div>
     </div>
 
-    <div class="profileprojects">
-        <h3>Accomplished Projects </h3>
+    <div id="profilePage">
+        <div class="card text-center rounded width33" id="profileContainer">
+            <h3 class="card-header">Current Projects </h3>
 
-        @if (ViewBag.accomplishedProjectCount == 0)
-        {
-            <h3>You don't have any accomplished projects, but keep working. You're doing great!</h3>
-
-
-        }
-        else
-        {
-            @foreach (var item in Model.AccomplishedProjects)
+            @if (ViewBag.projectCount == 0)
             {
+                <h3>You don't have any current projects. Would you like to create one?</h3>
                 <p>
-                <p>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
+                    <a asp-action="Create" asp-controller="Projects">Create New</a>
                 </p>
-                <p>
-                    - @Html.DisplayFor(modelItem => item.Language)
-                </p>
-                </p>
-                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
+
             }
-        }
+            else
+            {
+                @foreach (var item in Model.Projects)
+                {
+                    <p class="card-body text-center ">
+                    <p id="projectName">
+                        <strong> @Html.DisplayFor(modelItem => item.ProjectName)</strong>
+                    </p>
+                    <p>
+                        - @Html.DisplayFor(modelItem => item.Language)
+                    </p>
+                    </p>
+                    <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
+                    <hr />
+                }
+            }
+        </div>
+
+        <div class="card  text-center rounded width33">
+            <h3 class="card-header">Accomplished Projects </h3>
+
+            @if (ViewBag.accomplishedProjectCount == 0)
+            {
+                <h3>You don't have any accomplished projects, but keep working. You're doing great!</h3>
+
+
+            }
+            else
+            {
+                @foreach (var item in Model.AccomplishedProjects)
+                {
+                    <p>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </p>
+                    <p>
+                        - @Html.DisplayFor(modelItem => item.Language)
+                    </p>
+                    </p>
+                    <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
+                }
+            }
+        </div>
+
+
+        <div class="width33" id="friendsList">
+            <h3>Friends</h3>
+
+            @if (ViewBag.UsersFriendsCount >= 1)
+            {
+
+                @foreach (var item in Model.ApplicationUsers)
+                {
+                    <ul>
+                        <li>
+                            following @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+                        </li>
+
+                        <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
+                    </ul>
+                    <br />
+                }
+            }
+            else
+            {
+                <h3> not following any other Momentum users</h3>
+                <p>
+                    <a asp-action="Index" asp-controller="Friendships" class="links">View Users</a>
+                </p>
+            }
+        </div>
     </div>
 
 
-    <div class="profilefriends">
-        <h3>Friends</h3>
 
-        @if (ViewBag.UsersFriendsCount >= 1)
-        {
+    <h3>Upload Photo</h3>
 
-            @foreach (var item in Model.ApplicationUsers)
-            {
+    <div class="tab-pane" id="edit">
+        <form asp-action="UploadProfilePic" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.User.Id" />
 
-                <div>
-                    following @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+            <div class="form-group">
+                <div class="custom-file col-md-6">
+                    <label asp-for="ImageFile" class="custom-file-label">Upload Profile Picture</label>
+                    <input asp-for="ImageFile" class="custom-file-input" type="file" /><br><br>
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
                 </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-secondary" />
+            </div>
+        </form>
 
-                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
-                <br />
-            }
-        }
-        else
-        {
-            <h3> not following any other Momentum users</h3>
-            <p>
-                <a asp-action="Index" asp-controller="Friendships" class="links">View Users</a>
-            </p>
-        }
     </div>
 
 }
+
+
 else
 {
 
 
-    <div class="text-center">
-        <h1 class="display-4">Profile</h1>
-        @Html.DisplayFor(modelItem => Model.User.FirstName)
-    </div>
-
-    <div class="profileprojects">
-        <h3>Current Projects </h3>
-
-        @if (ViewBag.projectCount == 0)
-        {
-            <h3>This user does not have any current projects.</h3>
-
-
-        }
-        else
-        {
-            @foreach (var item in Model.Projects)
+    <div id="profileimagecontainer">
+        <div class="card" id="profileImage">
+            @if (Model.User.ImagePath != null)
             {
-                <p>
-                <p>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </p>
-                <p>
-                    - @Html.DisplayFor(modelItem => item.Language)
-                </p>
-                </p>
-                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
+                <img src="/images/profilepictures/@Model.User.ImagePath" style="width:100%" alt=“avatar” />
             }
-
-        }
+            <h1> @Html.DisplayFor(modelItem => Model.User.FirstName) @Html.DisplayFor(modelItem => Model.User.LastName)</h1>
+            <p class="title">@@@Html.DisplayFor(modelItem => Model.User.UserName)</p>
+        </div>
     </div>
 
+    <div id="profilePage">
+        <div class="card text-center rounded width33" id="profileContainer">
+            <h3 class="card-header">Current Projects </h3>
 
-    <div class="profilefriends">
-        <h3>Friends</h3>
+            @if (ViewBag.projectCount == 0)
+            {
+                <h3>This user does not have any current projects.</h3>
+             
 
-        @if (ViewBag.UsersFriendsCount > 1)
-        {
+            }
+            else
+            {
+                @foreach (var item in Model.Projects)
+                {
+                    <p class="card-body text-center ">
+                    <p id="projectName">
+                        <strong> @Html.DisplayFor(modelItem => item.ProjectName)</strong>
+                    </p>
+                    <p>
+                        - @Html.DisplayFor(modelItem => item.Language)
+                    </p>
+                    </p>
+                    <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
+                    <hr />
+                }
+            }
+        </div>
 
-            @foreach (var item in Model.ApplicationUsers)
+        <div class="card  text-center rounded width33">
+            <h3 class="card-header">Accomplished Projects </h3>
+
+            @if (ViewBag.accomplishedProjectCount == 0)
+            {
+                <h3>This user does not have any current projects</h3>
+
+
+            }
+            else
+            {
+                @foreach (var item in Model.AccomplishedProjects)
+                {
+                    <p>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </p>
+                    <p>
+                        - @Html.DisplayFor(modelItem => item.Language)
+                    </p>
+                    </p>
+                    <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
+                }
+            }
+        </div>
+
+
+        <div class="width33" id="friendsList">
+            <h3>Friends</h3>
+
+            @if (ViewBag.UsersFriendsCount >= 1)
             {
 
-                <div>
-                    @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
-                </div>
+                @foreach (var item in Model.ApplicationUsers)
+                {
+                    <ul>
+                        <li>
+                            following @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+                        </li>
 
-                <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
-                <br />
+                        <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
+                    </ul>
+                    <br />
+                }
             }
-        }
-        else
-        {
-            <h3>This user is not following any other Momentum users</h3>
-
-        }
+            else
+            {
+                <h3> This user is not following any other Momentum users</h3>
+                <p>
+                    <a asp-action="Index" asp-controller="Friendships" class="links">View Users</a>
+                </p>
+            }
+        </div>
     </div>
-
 
 }
 

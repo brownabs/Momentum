@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace Momentum.Models.ViewModels
     public class UserProfileViewModel
     {
 
-
+        public IFormFile ImageFile { get; set; }
         public Project Project { get; set; }
 
         //don't know yet if I need an IEnumerable or List of Quotes

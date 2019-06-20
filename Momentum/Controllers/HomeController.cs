@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Momentum.Data;
 using Momentum.Models;
+using Momentum.Models.UploadProfilePhotoViewModel;
 using Momentum.Models.ViewModels;
 
 namespace Momentum.Controllers
@@ -137,6 +139,35 @@ namespace Momentum.Controllers
 
 
             return View(model);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadProfilePic (UserProfileViewModel viewModel)
+        {
+            var currentuser = await GetCurrentUserAsync();
+            var User = await _context.ApplicationUsers.FindAsync(currentuser.Id);
+
+            ModelState.Remove("viewModel.Id");
+
+            if (viewModel.ImageFile != null)
+            {
+                var fileName = Path.GetFileName(viewModel.ImageFile.FileName);
+                Path.GetTempFileName();
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images/profilepictures", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await viewModel.ImageFile.CopyToAsync(stream);
+                }
+
+                User.ImagePath = viewModel.ImageFile.FileName;
+            }
+
+
+            _context.Update(User);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
         }
 
