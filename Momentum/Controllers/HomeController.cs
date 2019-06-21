@@ -167,7 +167,7 @@ namespace Momentum.Controllers
 
             _context.Update(User);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GetUserProfile));
 
         }
 

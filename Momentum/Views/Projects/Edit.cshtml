@@ -4,9 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Project</h4>
+<div class="text-center pb-sm-2">
+    <h3 class="display-4 font-italic">
+        Edit Project
+    </h3>
+</div>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -49,16 +51,16 @@
             <div class="form-group">
                 <input type="hidden" asp-for="UserId" asp-items="ViewBag.UserId" />
             </div>
-            <div class="form-group">
+            <div class="form-group pb-3">
                 <input type="submit" value="Save" class="btn btn-secondary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+<div class="text-center">
     <a asp-action="Edit" asp-route-id="@Model.ProjectId" class="links">Edit</a> |
-    <a asp-action="Index" class="links" >Back to List</a>
+    <a asp-action="Index" class="links">Back to List</a>
 </div>
 
 @section Scripts {

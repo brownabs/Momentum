@@ -46,6 +46,8 @@ namespace Momentum.Models
         [Display(Name = "Upload Project Image")]
         public string ImagePath { get; set; }
 
+
+        [Display(Name = "Mark complete or incomplete")]
         public bool IsCompleted { get; set; }
  
 
