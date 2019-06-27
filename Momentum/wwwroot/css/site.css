@@ -44,7 +44,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-color: #dfe3ee 
+    background-color: white; 
 }
 .footer {
   position: absolute;
@@ -194,4 +194,9 @@ a {
 .width33 {
     width: 32%;
     margin: 6px;
+}
+.websiteDescription {
+padding-top: 10px;
+    display: flex;
+    justify-content: center;
 }
