@@ -108,11 +108,11 @@ namespace Momentum.Controllers
                     }
 
                 }
+
                 if (friend == true)
                 {
                     usersCurrentUserHasAdded.Add(otherPerson);
                 }
-
             }
             if (usersCurrentUserHasAdded == null)
             {
