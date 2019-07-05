@@ -75,34 +75,60 @@
                 }
             }
         </div>
+    </div>
 
+    <div class="">
+        <h3>Following</h3>
 
-        <div class="width33" id="friendsList">
-            <h3>Friends</h3>
+        @if (ViewBag.UserFollowingCount >= 1)
+        {
 
-            @if (ViewBag.UsersFriendsCount >= 1)
+            @foreach (var item in Model.peopleCurrentUserIsFollowing)
             {
 
-                @foreach (var item in Model.ApplicationUsers)
-                {
-                    <ul>
-                        <li>
-                            following @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
-                        </li>
-
-                        <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
-                    </ul>
-                    <br />
-                }
-            }
-            else
-            {
-                <h3> not following any other Momentum users</h3>
                 <p>
-                    <a asp-action="Index" asp-controller="Friendships" class="links">View Users</a>
+                    @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+                    <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
                 </p>
+
+
+                <br />
             }
-        </div>
+        }
+        else
+        {
+            <h3> not following any other Momentum users</h3>
+            <p>
+                <a asp-action="Index" asp-controller="Friendships" class="links">View Users</a>
+            </p>
+        }
+    </div>
+
+    <div class="width33">
+        <h3>Followers</h3>
+
+        @if (ViewBag.UserFollowersCount >= 1)
+        {
+
+            @foreach (var item in Model.peopleFollowingCurrentUser)
+            {
+                <ul>
+                    <li>
+                        @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+                    </li>
+
+                    <a asp-action="GetUserProfile" asp-controller="Home" asp-route-id="@item.Id" class="links">View Profile</a>
+                </ul>
+                <br />
+            }
+        }
+        else
+        {
+            <h3> not following any other Momentum users</h3>
+            <p>
+                <a asp-action="Index" asp-controller="Friendships" class="links">View Users</a>
+            </p>
+        }
     </div>
 
 
@@ -153,7 +179,7 @@ else
             @if (ViewBag.projectCount == 0)
             {
                 <h3>This user does not have any current projects.</h3>
-             
+
 
             }
             else
@@ -167,9 +193,9 @@ else
                     <p>
                         - @Html.DisplayFor(modelItem => item.Language)
                     </p>
-                    </p>
                     <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.ProjectId" class="links">View Project</a>
                     <hr />
+                    </p>
                 }
             }
         </div>

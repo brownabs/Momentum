@@ -77,9 +77,11 @@ namespace Momentum.Controllers
             //created a list of users
 
             List<ApplicationUser> usersCurrentUserHasAdded = new List<ApplicationUser>();
+            List<ApplicationUser> usersfollowingCurrentUser = new List<ApplicationUser>();
 
 
-           
+
+
 
             //get users that aren't current user
             var otherUsers = await _context.ApplicationUsers.Where(u => u.Id != user.Id).ToListAsync();
@@ -89,11 +91,15 @@ namespace Momentum.Controllers
 
             //flag set friend to false
             bool friend = false;
+            bool follower = false;
+            bool following = false;
 
             //iterate over all other users
             foreach (var otherPerson in otherUsers)
             {
                 friend = false;
+                follower = false;
+                following = false;
 
                 //iterate over all friendships
                 foreach (var friendship in allFriendRelationships)
@@ -105,13 +111,24 @@ namespace Momentum.Controllers
                     if (user.Id == friendship.UserId && otherPerson.Id == friendship.FriendId)
                     {
                         friend = true;
+                        following = true;
                     }
 
+                    if (user.Id == friendship.FriendId && otherPerson.Id == friendship.UserId)
+                    {
+                        friend = true;
+                        follower = true;
+                    }
                 }
 
-                if (friend == true)
+                if (friend == true && following == true)
                 {
                     usersCurrentUserHasAdded.Add(otherPerson);
+                }
+
+                if (friend == true && follower == true)
+                {
+                    usersfollowingCurrentUser.Add(otherPerson);
                 }
             }
             if (usersCurrentUserHasAdded == null)
@@ -119,9 +136,16 @@ namespace Momentum.Controllers
                 return NotFound();
             }
 
-            var UserFriendsWithCount = usersCurrentUserHasAdded.Count();
+            if (usersfollowingCurrentUser == null)
+            {
+                return NotFound();
+            }
 
-            ViewData["UsersFriendsCount"] = UserFriendsWithCount;
+            var UserFollowingCount = usersCurrentUserHasAdded.Count();
+            var UserFollowersCount = usersfollowingCurrentUser.Count();
+
+            ViewData["UserFollowingCount"] = UserFollowingCount;
+            ViewData["UserFollowersCount"] = UserFollowersCount;
 
 
             var accomplishedProjects = _context.Project.Include(p => p.User).Where(p => p.IsCompleted == true && p.User == user);
@@ -132,7 +156,8 @@ namespace Momentum.Controllers
 
             UserProfileViewModel model = new UserProfileViewModel();
 
-            model.ApplicationUsers = usersCurrentUserHasAdded;
+            model.peopleCurrentUserIsFollowing = usersCurrentUserHasAdded;
+            model.peopleFollowingCurrentUser = usersfollowingCurrentUser;
             model.AccomplishedProjects = accomplishedProjects;
             model.Projects = projects;
             model.User = user;
