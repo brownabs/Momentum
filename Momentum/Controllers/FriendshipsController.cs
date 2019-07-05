@@ -30,9 +30,7 @@ namespace Momentum.Controllers
         {
             //created a list of users
 
-            List<ApplicationUser> usersNotFriendsWith = new List<ApplicationUser>();
-            List<ApplicationUser> usersFollowingCurrentUser = new List<ApplicationUser>();
-            List<ApplicationUser> usersCurrentUserIsFollowing = new List<ApplicationUser>();
+            List<ApplicationUser> usersCurrentUserIsntFollowing = new List<ApplicationUser>();
 
             //get current user
             var currentUser = await GetCurrentUserAsync();
@@ -43,16 +41,15 @@ namespace Momentum.Controllers
             //get all friendships
             var allFriendRelationships = await _context.Friendship.ToListAsync();
 
-            //flag set friend to false
-            bool friend = false;
-            bool friendFollowingCurrentUser = false;
-            bool currentUserFollowingFriend = false;
+            //flag setting to see if current user is following fellow Momentum users
+            bool followingUser = false;
+
 
 
             //iterate over all other users
             foreach (var otherPerson in otherPersons)
             {
-                friend = false;
+                followingUser = false;
 
                 //iterate over all friendships
                 foreach (var friendship in allFriendRelationships)
@@ -60,68 +57,50 @@ namespace Momentum.Controllers
 
                     // if other user's id is equal to a userId in the Friendship table 
                     //and current user is equal to a FriendId on the Friendship table
-                    //set friend to true
+                    //set followingUser to false
                     if (otherPerson.Id == friendship.UserId && currentUser.Id == friendship.FriendId)
                     {
-                        friend = true;
-                        friendFollowingCurrentUser = true;
+                        followingUser = false;       
 
                     }
 
                     //also if current user id is equal to UserId on table 
                     //and other user's id is equal to FriendId on Friendship table
-                    //set friend to true
+                    //set follingUser to true
                     if (currentUser.Id == friendship.UserId && otherPerson.Id == friendship.FriendId)
                     {
-                        friend = true;
-                        currentUserFollowingFriend = true;
-
+                        followingUser = true;
 
                     }
 
                 }
                 //if there isn't a relationship on the FriendShip Table, set friend to false and add to list
-                if (friend == false)
+                if (followingUser == false)
                 {
-                    usersNotFriendsWith.Add(otherPerson);
+                    usersCurrentUserIsntFollowing.Add(otherPerson);
 
-                }
-
-                if (friend == true && friendFollowingCurrentUser == true)
-                {
-                    usersFollowingCurrentUser.Add(otherPerson);
-
-                }
-
-                if (friend == true && currentUserFollowingFriend == true)
-                {
-                    usersCurrentUserIsFollowing.Add(otherPerson);
                 }
 
             }
 
 
-            if (usersNotFriendsWith == null)
+            if (usersCurrentUserIsntFollowing == null)
             {
                 return NotFound();
             }
 
-            var UsersNotFriendsWithCount = usersNotFriendsWith.Count();
-            var usersFollowingCurrentUserCount = usersFollowingCurrentUser.Count();
-            var usersCurrentUserIsFollowingCount = usersCurrentUserIsFollowing.Count();
+            var usersCurrentUserIsntFollowingCount = usersCurrentUserIsntFollowing.Count();
 
             UserAndFriendsViewModel model = new UserAndFriendsViewModel()
             {
 
-                notFriends = usersNotFriendsWith,
-                peopleCurrentUserIsFollowing = usersCurrentUserIsFollowing,
-                peopleFollowingCurrentUser = usersFollowingCurrentUser
+                notFriends = usersCurrentUserIsntFollowing
 
             };
 
            
 
-            ViewData["UsersNotFriendsWithCount"] = UsersNotFriendsWithCount;
+            ViewData["usersCurrentUserIsntFollowingCount"] = usersCurrentUserIsntFollowingCount;
             return View(model);
 
         }
