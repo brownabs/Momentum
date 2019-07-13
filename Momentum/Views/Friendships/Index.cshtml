@@ -8,7 +8,7 @@
 {
     <div class="text-center">
         <h3 class="display-4 font-italic">
-            There are no Momentum users for you to follow
+            You've made friends with everyone! There are no more Momentum users for you to follow
         </h3>
 
 
@@ -22,14 +22,14 @@ else
     <h3 class="display-4 font-italic">
        Momentum Users
     </h3>
-    <p>follow fellow Momentum users to see what projects they're working on </p>
+    <p>follow Momentum users to see what projects they're working on </p>
 </div>
         <table class="table">
             <thead>
              
             </thead>
             <tbody>
-                <div>
+               
                     @foreach (var item in Model.notFriends)
                     {
                         if (item != null)
@@ -49,8 +49,6 @@ else
                             </tr>
                         }
                     }
-                </div>
-
             </tbody>
         </table>
         }

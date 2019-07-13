@@ -98,8 +98,7 @@ namespace Momentum.Controllers
 
             };
 
-           
-
+          
             ViewData["usersCurrentUserIsntFollowingCount"] = usersCurrentUserIsntFollowingCount;
             return View(model);
 
