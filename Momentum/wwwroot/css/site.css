@@ -187,9 +187,15 @@ a {
     color: #303951 !important;
 }
 
-#friendsList {
-   color: white;
+.friendsList
+
+{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 30px;
+    padding-bottom: 90px;
 }
+
 
 .width33 {
     width: 45%;
