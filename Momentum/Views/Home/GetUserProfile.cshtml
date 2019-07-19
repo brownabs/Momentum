@@ -76,8 +76,8 @@
             }
         </div>
     </div>
-
-    <div class="friendsList">
+    <div class="friendsList" >
+    <div class="">
         <h3>Following</h3>
 
         @if (ViewBag.UserFollowingCount >= 1)
@@ -104,7 +104,7 @@
         }
     </div>
 
-    <div class="friendsList">
+    <div class="">
         <h3>Followers</h3>
 
         @if (ViewBag.UserFollowersCount >= 1)
@@ -131,7 +131,7 @@
         }
     </div>
 
-
+</div>
 
     <h3>Upload Photo</h3>
 
@@ -227,7 +227,7 @@ else
         </div>
 
 
-        <div class="width33" id="friendsList">
+        <div class="width33 friendsList">
             <h3>Friends</h3>
 
             @if (ViewBag.UsersFriendsCount >= 1)
